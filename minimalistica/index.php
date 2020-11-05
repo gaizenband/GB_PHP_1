@@ -2,6 +2,10 @@
 	$title = 'Minimalistica php page';
 	$header = "Minimalistica";
 	$curDate = date("Y");
+	$menu = ["home", "archive","contact"];
+	foreach ($menu as $value) {
+		$menu_list .= "<li><a href=\"#\">$value</a></li>";
+	}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -9,16 +13,14 @@
 <head>
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 	<meta name="author" content="Luka Cvrk (www.solucija.com)" />
-	<link rel="stylesheet" href="css/main.css" type="text/css" />
+	<link rel="stylesheet" href="../css/main.css" type="text/css" />
 	<title><?=$title?></title>
 </head>
 <body>
 	<div id="content">
 		<h1><?=$header?></h1>
 		<ul id="menu">
-			<li><a href="#">home</a></li>
-			<li><a href="#">archive</a></li>
-			<li><a href="#">contact</a></li>
+			<?= $menu_list ?>
 		</ul>
 	
 		<div class="post">
