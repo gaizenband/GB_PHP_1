@@ -4,26 +4,29 @@
 <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 
 <aside class="load_form">
-    <form action="load.php" method="post" enctype="multipart/form-data">
+    <form action="server.php?action=load" method="post" enctype="multipart/form-data">
     <h3>Add your image here</h3>
-    <input type="file" accept="image/*" name="image">
-    <input type="submit" value="Load">
+    <input type="file" accept="image/*" name="image" required>
+    <input type="submit" value="Load" name="upload">
     </form>
 </aside>
 
 <div class="wrapper">
     <div class="img_container">
         <?php
-            $images = scandir("img");
-            foreach ($images as $key => $value) {
-                if($key != 0 && $key != 1){
+            include("server.php");
+            $data = loadPage();
+            foreach ($data as $key => $value) {
                     ?>
-                        <a href="<?= "img/".$value ?>" data-fancybox="images" data-caption="Preview" class="link">
-                            <img width="350px" src=<?= "img/".$value ?>>
-                        </a>
+                        <div class="img_box">
+                            <a href="<?= $value['path'] ?>" data-fancybox="images" data-caption="Preview" class="link" id="<?= $value['id'] ?>" onclick="countClick(<?= $value['id'] ?>)">
+                                <img width="350px" src=<?= $value['path'] ?>>
+                            </a>
+                            <p style='text-align:center'>Просмотрено <?= $value['click_count'] ?> раз</p>
+                        </div>
                     <?php
-                }
             }
         ?>
     </div>
 </div>
+<script src="main.js"></script>
