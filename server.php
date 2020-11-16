@@ -15,6 +15,20 @@ function loadPage(){
         }
 }
 
+function loadComments(){
+    $sql = "select * from comments order by upload_date desc";
+    $query = mysqli_query($GLOBALS['connection'],$sql);
+    if($query){
+        $data = [];
+        while($assocData = mysqli_fetch_assoc($query)){
+            array_push($data,$assocData);
+        }
+        return $data;
+    }else {
+        echo mysqli_error($GLOBALS['connection']);
+    }
+}
+
 if($_GET['action'] == 'load'){
     $salt = "lxfjn1";
     $imgName = $_FILES['image']['name'].$salt;
@@ -35,4 +49,17 @@ if($_GET['action'] == 'load'){
 if(isset($_POST['functionname'])){
     $sql = "update images set click_count =  click_count + 1 where id = $_POST[arguments]";
     mysqli_query($GLOBALS['connection'],$sql);  
+}
+
+if($_GET['action'] == 'comment' && isset($_POST["userName"])){
+    $user = $_POST["userName"];
+    $comment = $_POST["comment"];
+
+    $sql = "insert into comments(userName,comment) values('$user','$comment')";
+    $query = mysqli_query($GLOBALS['connection'],$sql);
+    if ($query) {
+        header("Location: index.php");
+    } else {
+        echo mysqli_error($GLOBALS['connection']);
+    }
 }

@@ -11,10 +11,37 @@
     </form>
 </aside>
 
+<aside class="comments">
+    <form action="server.php?action=comment" method="post">
+    <h3>Your comment about this site</h3>
+    <div class="comment_txt">
+        <input type="text" name="userName" placeholder="Your name" required>
+        <textarea name="comment"></textarea>
+    </div>
+    <input type="submit" value="Load" name="upload">
+    </form>
+</aside>
+
+<aside class="user_comments">
+    <?php
+    include("server.php");
+    $comments = loadComments();
+    foreach ($comments as $key => $value) {
+    ?>
+    <div class="comment_area">
+        <h4 class="user_comments_name"><?=$value['userName']?></h4>
+        <p class="user_comments_coment"><?=$value['comment']?></p>
+        <p class="user_comments_date"><?=$value['upload_date']?></p>
+    </div>
+    <?php
+            }
+    ?>
+</aside>
+
 <div class="wrapper">
     <div class="img_container">
         <?php
-            include("server.php");
+            // include("server.php");
             $data = loadPage();
             foreach ($data as $key => $value) {
                     ?>
