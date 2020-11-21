@@ -1,10 +1,10 @@
 Vue.component('header-comp',{
-    props:['cartitems','addproduct','products','deleteitem'],
+    props:['cartitems','addproduct','products','deleteitem', 'cookie'],
     template: ` <div class="head">
                     <h1>Shop</h1>
                     <div class="head_content">
                         <search></search>
-                        <cart :products = 'products' :cartitems = 'cartitems' :addproduct='addproduct' :deleteitem='deleteitem'></cart>
+                        <cart :products = 'products' :cartitems = 'cartitems' :addproduct='addproduct' :deleteitem='deleteitem' :cookie='cookie'></cart>
                     </div>
                 </div>
 `
@@ -25,7 +25,7 @@ Vue.component('search',{
 })
 
 Vue.component('cart',{
-    props:['cartitems','addproduct', 'products','deleteitem'],
+    props:['cartitems','addproduct', 'products','deleteitem', 'cookie'],
     data(){
         return {
             isVisibleCart: false,
@@ -50,11 +50,12 @@ Vue.component('cart',{
     <div class="cart_content">
         <button class="btn-cart" type="button" @click='isVisibleCart = !isVisibleCart'>Корзина</button>
         <div class="cart" v-if='isVisibleCart'>
-            <p v-if='!cartitems.length'>Пусто</p>
+            <p v-if='!cookie'>Please register with button below</p>
+            <p v-if='!cartitems.length && cookie'>Пусто</p>
             <div class='cart_item' v-for="item of cartitems" :key='item.id_item'>
                 <div class='cart_item_info'>
                     <p class='cart_item_name'>{{getName(item.id_item)}}</p>
-                    Количество:<input type='number' class='cart_item_count' @input='$parent.$emit("addproduct",item.id_item,$event.target.value)' :value='item.count'> 
+                    Количество:<input type='number' class='cart_item_count' @input='$parent.$emit("addproduct",item.id_item,$event.target.value,cookie)' :value='item.count'> 
                     <p class='cart_item_price'>Стоимость: {{item.count * getPrice(item.id_item)}}</p>
                 </div>
                 <button @click='$parent.$emit("deleteitem",item.id_item)'>Удалить</button>

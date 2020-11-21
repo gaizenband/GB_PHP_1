@@ -1,5 +1,5 @@
 Vue.component('products-comp',{
-    props:['showed','addproduct'],
+    props:['showed','addproduct', 'cookie'],
     template: ` <div class="products">
                     <div v-for="product of showed" :key='product.id' class="product-item">
                     <a :href="'img/'+product.img" data-fancybox="images" :data-caption="product.long_desc" class="link">
@@ -11,7 +11,7 @@ Vue.component('products-comp',{
                                 <h4 class='product_name'>{{product.short_desc}}</h4>
                                 <p class='product_price'>Стоимость: {{product.price}} рублей</p>
                             </div>
-                            <button class="buy-btn" :id="product.id" @click='$emit("addproduct",product.id)'>Купить</button>
+                            <button class="buy-btn" :id="product.id" @click='$emit("addproduct",product.id,0,cookie)'>Купить</button>
                         </div>
                     </div>
                 </div>

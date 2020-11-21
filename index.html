@@ -11,16 +11,18 @@
 <body>
     <div id="app">
         <header>
-            <header-comp :products='products' :cartitems="cartGoods" @filtergoods='filterGoods' @addproduct='addProduct' @deleteitem='deleteItem'></header-comp>
+            <header-comp :cookie='cookie' :products='products' :cartitems="cartGoods" @filtergoods='filterGoods' @addproduct='addProduct' @deleteitem='deleteItem'></header-comp>
         </header>
         <main>
-            <products-comp :showed='showedProducts' @addproduct='addProduct'></products-comp>
+            <personal-link @register='register' :cookie='cookie' :userinfo='userInfo'></personal-link>
+            <products-comp :showed='showedProducts' @addproduct='addProduct' :cookie='cookie'></products-comp>
         </main>
     </div>
     
     <script src="vue.js"></script>
     <script src="header.js"></script>
     <script src="products.js"></script>
+    <script src="perosnal.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
