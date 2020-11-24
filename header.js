@@ -1,10 +1,10 @@
 Vue.component('header-comp',{
-    props:['cartitems','addproduct','products','deleteitem', 'cookie'],
+    props:['cartitems','addproduct','products','deleteitem', 'cookie','placeorder'],
     template: ` <div class="head">
                     <h1>Shop</h1>
                     <div class="head_content">
                         <search></search>
-                        <cart :products = 'products' :cartitems = 'cartitems' :addproduct='addproduct' :deleteitem='deleteitem' :cookie='cookie'></cart>
+                        <cart :placeorder = 'placeorder' :products = 'products' :cartitems = 'cartitems' :addproduct='addproduct' :deleteitem='deleteitem' :cookie='cookie'></cart>
                     </div>
                 </div>
 `
@@ -25,10 +25,11 @@ Vue.component('search',{
 })
 
 Vue.component('cart',{
-    props:['cartitems','addproduct', 'products','deleteitem', 'cookie'],
+    props:['cartitems','addproduct', 'products','deleteitem', 'cookie','placeorder'],
     data(){
         return {
             isVisibleCart: false,
+            useradress:'',
         }
     },
     methods: {
@@ -61,6 +62,8 @@ Vue.component('cart',{
                 <button @click='$parent.$emit("deleteitem",item.id_item)'>Удалить</button>
             </div>
             <p v-if='cartitems.length'>Итого: {{calculateCart()}}</p>
+            <textarea class=adress placeholder=Adress.. cols=30 rows=5 v-model="useradress" v-if='cartitems.length'></textarea>
+            <button v-if='cartitems.length' class=btn-cart @click='$parent.$emit("placeorder",useradress)'>Заказать</button>
         </div>
     </div>
     `

@@ -1,5 +1,5 @@
 Vue.component('personal-link',{
-    props:['register', 'cookie','userinfo'],
+    props:['register', 'cookie','userinfo','quit'],
     data(){
         return {
             isVisiblePersonal: false,
@@ -11,6 +11,7 @@ Vue.component('personal-link',{
     },
     template: ` <div class="link">
                     <button class="buy-btn personal-link" @click='isVisiblePersonal = !isVisiblePersonal'>Личный кабинет</button>
+                    <button class="buy-btn personal-link quit" v-if='cookie' @click='$emit("quit")'>Выйти</button>
                     <div class="personal-info" v-if='isVisiblePersonal'>
                         <form action='#' method="POST" class="access" v-if="!cookie">
                             <p>Login:</p>
@@ -29,7 +30,9 @@ Vue.component('personal-link',{
                         </form>
                         <div class="info" v-if="cookie">
                             <p>Wellcome {{userinfo.first_name? userinfo.first_name:userinfo.user_name}}</p>
-                        
+                            <div class="orders" v-if='userinfo.admin_status'>
+                                
+                            </div>
                         </div>
                     </div>
                 </div>

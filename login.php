@@ -2,8 +2,9 @@
 include "config.php";
 header('Content-Type: application/json');
 
-if(isset($_GET['fetchUser'])){
+if($_GET['fetchUser'] == 1){
     $userCookie = $_GET['login'];
+
     $sql = "select id,user_name,admin_status,first_name from users where cookie = 'login=$userCookie'";
     $query = mysqli_query($GLOBALS['connection'],$sql);
 
@@ -15,6 +16,9 @@ if(isset($_GET['fetchUser'])){
     }else{
         die(mysqli_error($GLOBALS['connection']));
     }
+} else {
+    setcookie('login',$_GET['name'],1);
+    echo $_COOKIE['login'];
 }
 
 if(isset($_POST['functionname'])){
