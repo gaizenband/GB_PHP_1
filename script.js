@@ -9,13 +9,20 @@ const app = new Vue(
             cartGoods:[],
             cookie:'',
             userInfo: {},
-            userOrders: {},
+            userOrders: [],
+            uniqueOrders: [],
+            
         },
         methods: {
             fetchProducts(url){
                 return fetch(url)
                     .then(answer => answer.json())
-                    .catch(error => console.log(error));
+                    .catch(error => console.log(error))
+                    .then(data => {
+                        this.products = [...data];
+                        this.showedProducts = this.products;
+    
+                    });
             },
             fetchCart(){
                 return fetch(`cart.php?userId=${this.userInfo.id}`)
@@ -69,6 +76,7 @@ const app = new Vue(
                     },
                 })
                 await this.fetchUser();
+                await this.fetchOrders();
                 this.fetchCart();
             },
             fetchUser(){
@@ -101,24 +109,47 @@ const app = new Vue(
                     this.fetchOrders();
                     this.fetchCart();
             },
-            fetchOrders(){
-                fetch(`orders.php?userId=${this.userInfo.id}`)
+            async fetchOrders(){
+                await fetch(`orders.php?userId=${this.userInfo.id}`)
                 .then(answer => answer.json())
                 .catch(error => console.log(error))
-                .then(data => console.log(data));
- 
+                .then(data => this.userOrders = data);
+                this.userOrders.forEach(el => {
+                    if(!this.uniqueOrders.includes(el.date_created))
+                        this.uniqueOrders.push(el.date_created);
+                });
+            },
+            async deleteOrder(date){
+                await fetch(`orders.php?userId=${this.userInfo.id}&date=${date}`)
+                .then(answer => answer)
+                .catch(error => console.log(error))
+                .then(data => alert("Item has been deleted"));
+                this.fetchOrders();
+            },
+            async changeStatus(e,date){
+                await fetch(`orders.php?newStatus=${e.target.value}&date=${date}`)
+                .then(answer => answer)
+                .catch(error => console.log(error))
+                .then(data => alert("Done"));
+                this.fetchOrders();
+            },
+            async deleteItem(e){
+                e.preventDefault();
+                await fetch(`admin.php?delete=1&id=${e.target.id}`) 
+                .then(answer => answer)
+                .catch(error => console.log(error))
+                .then(data => alert("Done"));
+                this.fetchProducts(this.api);
             }
         },
         async mounted() {
-            this.fetchProducts(this.api)
-                .then(data => {
-                    this.products = [...data];
-                    this.showedProducts = this.products;
-
-                });
+            await this.fetchProducts(this.api)
+            
+            if(document.cookie){
                 await this.fetchUser();
                 await this.fetchCart();
                 this.fetchOrders();
+            }
         },
     }   
 )

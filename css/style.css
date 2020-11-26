@@ -207,3 +207,32 @@ h1 {
 .register p {
     margin-right: 2px;
 }
+
+.orders {
+    margin-top: 10px;
+}
+
+.order {
+    margin: 5px 0;
+    border: 2px solid black;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.list-order {
+    display: flex;
+}
+
+.order-info {
+    margin: 2px;
+}
+
+.decline{
+    padding: 2px;
+}
+
+.changeStatus {
+    display: flex;
+}

@@ -14,7 +14,7 @@
             <header-comp @placeorder='placeOrder' :cookie='cookie' :products='products' :cartitems="cartGoods" @filtergoods='filterGoods' @addproduct='addProduct' @deleteitem='deleteItem'></header-comp>
         </header>
         <main>
-            <personal-link @quit='quitUser' @register='register' :cookie='cookie' :userinfo='userInfo'></personal-link>
+            <personal-link @deleteitem='deleteItem' :products='products' @changestatus='changeStatus' @deleteorder='deleteOrder' @quit='quitUser' @register='register' :cookie='cookie' :userinfo='userInfo' :uniqueorders='uniqueOrders' :userorders='userOrders' :products='products'></personal-link>
             <products-comp :showed='showedProducts' @addproduct='addProduct' :cookie='cookie'></products-comp>
         </main>
     </div>

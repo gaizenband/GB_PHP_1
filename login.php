@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 if($_GET['fetchUser'] == 1){
     $userCookie = $_GET['login'];
 
-    $sql = "select id,user_name,admin_status,first_name from users where cookie = 'login=$userCookie'";
+    $sql = "select id,user_name,admin_status,first_name from users where user_name='$userCookie'";
     $query = mysqli_query($GLOBALS['connection'],$sql);
 
     if($query){
